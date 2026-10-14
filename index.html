@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#20262e">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/png" href="./icons/icon-192.png">
+  <title>Yeroo eBook Viewer</title>
+  <script type="module" crossorigin src="./assets/index-w85K--mE.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DsdM3f8B.css">
+</head>
+<body>
+  <section id="home">
+    <header>
+      <h1>서재</h1>
+      <div class="actions">
+        <button id="themeBtn" title="밝게/어둡게">◐</button>
+        <button id="sampleBtn">샘플 문서</button>
+        <button id="openBtn" class="primary">파일 열기</button>
+      </div>
+    </header>
+    <p class="hint">PDF나 이미지 파일을 열거나 이 화면에 끌어다 놓으세요. 이미지 여러 장을 함께 고르면 한 권으로 묶입니다.</p>
+    <div id="lib"></div>
+  </section>
+
+  <section id="reader" hidden>
+    <div id="chrome">
+    <div class="bar nav">
+      <span class="group">
+        <button id="sideBtn" title="페이지·목차·북마크·검색">☰</button>
+        <button id="homeBtn">서재</button>
+      </span>
+      <span id="title"></span>
+      <span class="grow"></span>
+      <span class="group" id="pageBox">
+        <button id="prevBtn" title="이전 쪽">‹</button>
+        <input id="pageNo" inputmode="numeric" aria-label="쪽 번호">
+        <span id="pageCount"></span>
+        <button id="nextBtn" title="다음 쪽">›</button>
+      </span>
+      <span class="group">
+        <button id="zoomOut" title="축소">−</button>
+        <span id="zoomLabel"></span>
+        <button id="zoomIn" title="확대">＋</button>
+      </span>
+      <span class="group">
+        <button id="bmBtn" title="이 쪽 북마크">☆</button>
+        <button id="viewBtn" title="맞춤·2쪽 보기·쪽 넘김·다크 모드">보기 ▾</button>
+      </span>
+      <button id="saveBtn" class="primary" title="필기를 포함해 PDF로 저장">PDF 저장</button>
+    </div>
+    <div class="bar tools">
+      <span class="group" id="toolBtns">
+        <button data-tool="hand">이동</button>
+        <button data-tool="pen" title="글줄 맞춤이나 직선으로 그은 선의 끝을 누르면 끝 모양이 화살표 → : → 없음 순으로 바뀝니다">펜</button>
+        <button data-tool="hl">형광펜</button>
+        <button data-tool="eraser" title="손글씨를 지웁니다(쪽 위의 글은 글 도구에서 글자를 모두 지우면 사라집니다)">지우개</button>
+        <button data-tool="text" title="쪽을 눌러 글을 씁니다. 쓴 글은 누르면 고치고 끌면 옮깁니다. 글자를 모두 지우면 사라집니다">글</button>
+        <button data-tool="memo" title="페이지를 눌러 메모장을 넣습니다">메모</button>
+      </span>
+      <span class="group" id="swatches"></span>
+      <span class="group" id="widthBox">
+        <label for="width" id="widthName">굵기</label>
+        <input id="width" type="range">
+        <span id="widthLabel"></span>
+      </span>
+      <span class="group">
+        <button id="straightBtn" title="그은 선을 직선으로 만듭니다(수평·수직에 가까우면 반듯하게). 글줄 맞춤이 꺼져 있을 때 적용됩니다">직선</button>
+        <button id="snapBtn" title="펜은 글줄 밑에, 형광펜은 글줄 위에 자동으로 맞춥니다. 끄면 아무 데나 그릴 수 있습니다">글줄 맞춤</button>
+      </span>
+      <span class="group">
+        <button id="undoBtn" title="실행 취소">↶</button>
+        <button id="redoBtn" title="다시 실행">↷</button>
+      </span>
+      <span class="group">
+        <button id="addPageBtn">쪽 추가 ▾</button>
+        <button id="delPageBtn">쪽 삭제</button>
+      </span>
+    </div>
+    </div>
+    <div class="body">
+      <aside id="side" hidden>
+        <nav id="tabs">
+          <button data-tab="pages">페이지</button>
+          <button data-tab="toc">목차</button>
+          <button data-tab="marks">북마크</button>
+          <button data-tab="search">검색</button>
+        </nav>
+        <div id="panel"></div>
+      </aside>
+      <main id="scroller"><div id="pages"></div></main>
+    </div>
+  </section>
+
+  <canvas id="loupe" hidden></canvas>
+  <div id="toast" hidden></div>
+  <div id="update" role="status" hidden>
+    <span>새 버전이 있습니다.</span>
+    <button id="updateNow" class="primary">지금 바꾸기</button>
+    <button id="updateLater">나중에</button>
+  </div>
+  <div id="busy" hidden><div><i class="spin"></i><span id="busyMsg"></span></div></div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "Yeroo eBook Viewer",
+  "short_name": "Yeroo eBook",
+  "description": "PDF·이미지 이북 뷰어 + 필기",
+  "lang": "ko",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "theme_color": "#20262e",
+  "background_color": "#20262e",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
