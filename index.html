@@ -9,8 +9,8 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" type="image/png" href="./icons/icon-192.png">
   <title>Yeroo eBook Viewer</title>
-  <script type="module" crossorigin src="./assets/index-BUg7bszH.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-DShMC2gH.css">
+  <script type="module" crossorigin src="./assets/index-CTxkCeFz.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DRsLoD8K.css">
 </head>
 <body>
   <section id="home">
@@ -38,7 +38,7 @@
       <span class="group" id="pageBox">
         <button id="prevBtn" title="이전 쪽">‹</button>
         <input id="pageNo" inputmode="numeric" aria-label="쪽 번호">
-        <span id="pageCount"></span>
+        <button id="pageCount" title="쪽 넘김 바(처음·끝으로, 멀리 가기)"></button>
         <button id="nextBtn" title="다음 쪽">›</button>
       </span>
       <span class="group">
@@ -91,12 +91,25 @@
         </nav>
         <div id="panel"></div>
       </aside>
-      <main id="scroller"><div id="pages"></div></main>
+      <div id="stage">
+        <main id="scroller"><div id="pages"></div></main>
+        <div id="turnHint" aria-hidden="true"></div>
+        <div id="pager" hidden>
+          <button id="pagerBack" hidden></button>
+          <div class="row">
+            <button id="pagerFirst">처음</button>
+            <button id="pagerPrev" aria-label="이전 쪽">‹</button>
+            <input id="pagerSlider" type="range" min="1" step="1" aria-label="쪽 이동">
+            <span id="pagerLabel"></span>
+            <button id="pagerNext" aria-label="다음 쪽">›</button>
+            <button id="pagerLast">끝</button>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
   <canvas id="loupe" hidden></canvas>
-  <div id="turnHint" aria-hidden="true"></div>
   <div id="toast" hidden></div>
   <div id="update" role="status" hidden>
     <span>새 버전이 있습니다.</span>
