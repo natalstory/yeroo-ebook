@@ -9,8 +9,8 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" type="image/png" href="./icons/icon-192.png">
   <title>Yeroo eBook Viewer</title>
-  <script type="module" crossorigin src="./assets/index-DNP33kdP.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-kuuSYYoK.css">
+  <script type="module" crossorigin src="./assets/index-DLaYCKbS.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-BDp9jwUb.css">
 </head>
 <body>
   <section id="home">
@@ -30,7 +30,7 @@
     <div id="chrome">
     <div class="bar nav">
       <span class="group">
-        <button id="sideBtn" title="페이지·목차·북마크·검색">☰</button>
+        <button id="sideBtn" title="페이지·목차·인덱스·검색">☰</button>
         <button id="homeBtn">서재</button>
       </span>
       <span id="title"></span>
@@ -47,7 +47,8 @@
         <button id="zoomIn" title="확대">＋</button>
       </span>
       <span class="group">
-        <button id="bmBtn" title="이 쪽 북마크">☆</button>
+        <button id="tabSideBtn" class="tab" data-where="side" title="옆 인덱스: 이 쪽의 오른쪽 위에 표식을 답니다" aria-label="옆 인덱스"><i class="tabicon side"></i></button>
+        <button id="tabTopBtn" class="tab" data-where="top" title="위 인덱스: 정말 중요한 쪽의 위쪽에 표식을 답니다" aria-label="위 인덱스"><i class="tabicon top"></i></button>
         <button id="viewBtn" title="크기 맞춤·넘기는 방식·2쪽 보기·다크 모드">보기 ▾</button>
       </span>
       <button id="saveBtn" class="primary" title="필기를 포함해 PDF로 저장합니다. 이 앱에서 다시 열면 필기를 이어서 고칠 수 있습니다">PDF 저장</button>
@@ -86,7 +87,7 @@
         <nav id="tabs">
           <button data-tab="pages">페이지</button>
           <button data-tab="toc">목차</button>
-          <button data-tab="marks">북마크</button>
+          <button data-tab="marks">인덱스</button>
           <button data-tab="search">검색</button>
         </nav>
         <div id="panel"></div>
@@ -116,6 +117,6 @@
     <button id="updateNow" class="primary">지금 바꾸기</button>
     <button id="updateLater">나중에</button>
   </div>
-  <div id="busy" hidden><div><i class="spin"></i><span id="busyMsg"></span></div></div>
+  <div id="busy" hidden><div><i class="spin"></i><span id="busyMsg"></span></div></div>
 </body>
 </html>
