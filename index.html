@@ -11,8 +11,8 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" type="image/png" href="./icons/icon-192.png">
   <title>Yeroo eBook Viewer</title>
-  <script type="module" crossorigin src="./assets/index-D2R-LSXy.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-CS27G72c.css">
+  <script type="module" crossorigin src="./assets/index-6tAbCdvn.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-B81qryOB.css">
 </head>
 <body>
   <nav id="books" aria-label="책 탭" hidden>
@@ -30,10 +30,18 @@
         <button id="openBtn" class="primary">파일 열기</button>
       </div>
     </header>
-    <p class="hint">PDF나 이미지 파일을 열거나 이 화면에 끌어다 놓으세요. 이미지 여러 장을 함께 고르면 한 권으로 묶입니다. 서재 백업(.zip)을 열면 책들이 서재에 돌아옵니다.</p>
+    <p class="hint">PDF나 이미지 파일을 열거나 이 화면에 끌어다 놓으세요. 이미지 여러 장을 함께 고르면 한 권으로 묶입니다. 서재 백업(.json, .zip)을 열면 책들이 서재에 돌아옵니다.</p>
+    <p class="hint" id="linkHint" hidden>PDF는 기기의 원래 자리에 둔 채 엽니다. 파일을 옮기거나 지우면 책을 열 때 다시 골라 주세요.</p>
     <div id="backup" hidden>
       <span id="backupMsg"></span>
-      <button id="backupBtn" title="서재의 책을 모두 필기가 든 PDF로 만들어 ZIP 파일 하나로 내려받습니다">서재 백업</button>
+      <span class="choices">
+        <button id="notesBtn" title="책 목록과 필기만 작은 파일 하나로 내려받습니다. 책 파일(PDF·그림)은 담지 않습니다">필기 백업</button>
+        <button id="backupBtn" title="서재의 책을 모두 필기가 든 PDF로 만들어 ZIP 파일 하나로 내려받습니다. 기기를 바꿀 때 씁니다">책까지 백업</button>
+      </span>
+    </div>
+    <div id="lostBooks" hidden>
+      <span id="lostBooksMsg"></span>
+      <button id="lostBooksBtn">책 파일 고르기</button>
     </div>
     <div id="lib"></div>
   </section>
@@ -104,6 +112,11 @@
       <div id="stage">
         <main id="scroller"><div id="pages"></div></main>
         <div id="turnHint" aria-hidden="true"></div>
+        <div id="lost" role="status" hidden>
+          <span id="lostMsg"></span>
+          <button id="lostBtn" class="primary"></button>
+          <button id="lostClose" aria-label="닫기" title="닫기">×</button>
+        </div>
         <div id="pager" hidden>
           <button id="pagerBack" hidden></button>
           <div class="row">
@@ -135,6 +148,6 @@
     <p id="awayMsg"></p>
     <div class="choices"><button id="awayBtn" class="primary"></button></div>
   </dialog>
-  <div id="busy" hidden><div><i class="spin"></i><span id="busyMsg"></span></div></div>
+  <div id="busy" hidden><div><i class="spin"></i><span id="busyMsg"></span></div></div>
 </body>
 </html>
