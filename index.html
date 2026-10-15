@@ -9,10 +9,15 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" type="image/png" href="./icons/icon-192.png">
   <title>Yeroo eBook Viewer</title>
-  <script type="module" crossorigin src="./assets/index-CPOBLGA1.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-DYr5xdoE.css">
+  <script type="module" crossorigin src="./assets/index-JR2pgSEy.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-BJWnCB73.css">
 </head>
 <body>
+  <nav id="books" aria-label="책 탭" hidden>
+    <button id="homeTab"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 7.5 8 3l5.5 4.5V13h-3.5V9.5h-4V13H2.5z"/></svg>서재</button>
+    <div id="bookList"></div>
+    <button id="moreBooks" hidden></button>
+  </nav>
   <section id="home">
     <header>
       <h1>서재</h1>
@@ -31,7 +36,6 @@
     <div class="bar nav">
       <span class="group">
         <button id="sideBtn" title="페이지·목차·인덱스·필기·검색">☰</button>
-        <button id="homeBtn">서재</button>
       </span>
       <span id="title"></span>
       <span class="grow"></span>
