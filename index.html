@@ -11,8 +11,8 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" type="image/png" href="./icons/icon-192.png">
   <title>Yeroo eBook Viewer</title>
-  <script type="module" crossorigin src="./assets/index-6tAbCdvn.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-B81qryOB.css">
+  <script type="module" crossorigin src="./assets/index-xngKLgAq.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-JLe4dv3T.css">
 </head>
 <body>
   <nav id="books" aria-label="책 탭" hidden>
@@ -32,6 +32,13 @@
     </header>
     <p class="hint">PDF나 이미지 파일을 열거나 이 화면에 끌어다 놓으세요. 이미지 여러 장을 함께 고르면 한 권으로 묶입니다. 서재 백업(.json, .zip)을 열면 책들이 서재에 돌아옵니다.</p>
     <p class="hint" id="linkHint" hidden>PDF는 기기의 원래 자리에 둔 채 엽니다. 파일을 옮기거나 지우면 책을 열 때 다시 골라 주세요.</p>
+    <div id="folder" hidden>
+      <span id="folderMsg"></span>
+      <span class="choices">
+        <button id="folderGo" hidden></button>
+        <button id="folderBtn"></button>
+      </span>
+    </div>
     <div id="backup" hidden>
       <span id="backupMsg"></span>
       <span class="choices">
