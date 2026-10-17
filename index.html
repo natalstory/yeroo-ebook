@@ -4,17 +4,18 @@
   <meta http-equiv="Content-Security-Policy" content="default-src &#39;self&#39;; script-src &#39;self&#39; &#39;wasm-unsafe-eval&#39;; style-src &#39;self&#39; &#39;unsafe-inline&#39;; img-src &#39;self&#39; data: blob:; font-src &#39;self&#39; data:; connect-src &#39;self&#39; data: blob:; worker-src &#39;self&#39; blob:; object-src &#39;none&#39;; base-uri &#39;self&#39;; form-action &#39;none&#39;">
 
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#20262e">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" type="image/png" href="./icons/icon-192.png">
   <title>Yeroo eBook Viewer</title>
-  <script type="module" crossorigin src="./assets/index-xngKLgAq.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-JLe4dv3T.css">
+  <script type="module" crossorigin src="./assets/index-B5ei3e7O.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-D3Bs6yv1.css">
 </head>
 <body>
+  <noscript><p class="noscript">이 앱은 자바스크립트가 꺼져 있으면 열리지 않습니다. 브라우저 설정에서 자바스크립트를 켜 주세요.</p></noscript>
   <nav id="books" aria-label="책 탭" hidden>
     <button id="homeTab"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 7.5 8 3l5.5 4.5V13h-3.5V9.5h-4V13H2.5z"/></svg>서재</button>
     <div id="bookList"></div>
@@ -30,20 +31,26 @@
         <button id="openBtn" class="primary">파일 열기</button>
       </div>
     </header>
-    <p class="hint">PDF나 이미지 파일을 열거나 이 화면에 끌어다 놓으세요. 이미지 여러 장을 함께 고르면 한 권으로 묶입니다. 서재 백업(.json, .zip)을 열면 책들이 서재에 돌아옵니다.</p>
+    <p class="hint">PDF나 이미지 파일을 열거나 이 화면에 끌어다 놓으세요. 이미지 여러 장을 함께 고르면 한 권으로 묶입니다. 백업 파일(.json)이나 예전에 만든 책 포함 백업(.zip)을 열면 책들이 서재에 돌아옵니다.</p>
     <p class="hint" id="linkHint" hidden>PDF는 기기의 원래 자리에 둔 채 엽니다. 파일을 옮기거나 지우면 책을 열 때 다시 골라 주세요.</p>
     <div id="folder" hidden>
-      <span id="folderMsg"></span>
+      <span class="say"><span id="folderMsg"></span><small id="folderWhat"></small></span>
       <span class="choices">
         <button id="folderGo" hidden></button>
         <button id="folderBtn"></button>
       </span>
     </div>
+    <div id="bookdir" hidden>
+      <span class="say"><span id="bookdirMsg"></span><small id="bookdirWhat"></small></span>
+      <span class="choices">
+        <button id="bookdirGo" hidden></button>
+        <button id="bookdirBtn"></button>
+      </span>
+    </div>
     <div id="backup" hidden>
       <span id="backupMsg"></span>
       <span class="choices">
-        <button id="notesBtn" title="책 목록과 필기만 작은 파일 하나로 내려받습니다. 책 파일(PDF·그림)은 담지 않습니다">필기 백업</button>
-        <button id="backupBtn" title="서재의 책을 모두 필기가 든 PDF로 만들어 ZIP 파일 하나로 내려받습니다. 기기를 바꿀 때 씁니다">책까지 백업</button>
+        <button id="backupBtn" title="책 목록과 필기를 작은 파일 하나로 저장합니다. 책 파일(PDF·그림)은 담지 않습니다. 책을 필기와 함께 간직하려면 책마다 &quot;PDF 저장&quot;을 쓰세요">백업</button>
       </span>
     </div>
     <div id="lostBooks" hidden>
@@ -55,53 +62,46 @@
 
   <section id="reader" hidden>
     <div id="chrome">
-    <div class="bar nav">
+    <!-- 막대 한 줄(넓은 가로 화면에서는 오른쪽 레일). 단추는 그림이고 이름(.name)은 레일에서만 보인다(위쪽 막대에서는 화면 낭독기만 읽는다).
+         .rail: 레일에만 있는 것(위쪽 막대에서는 다른 길이 있다: 화면 끝·쪽 넘김 바, 두 손가락·보기 메뉴) -->
+    <div class="bar">
       <span class="group">
-        <button id="sideBtn" title="페이지·목차·인덱스·필기·검색">☰</button>
+        <button id="sideBtn" title="페이지·목차·인덱스·필기·검색" aria-label="옆 패널">☰</button>
       </span>
-      <span class="grow"></span>
       <span class="group" id="pageBox">
-        <button id="prevBtn" title="이전 쪽">‹</button>
+        <button id="prevBtn" class="rail" title="이전 쪽" aria-label="이전 쪽">‹</button>
         <input id="pageNo" inputmode="numeric" aria-label="쪽 번호">
         <button id="pageCount" title="쪽 넘김 바(처음·끝으로, 멀리 가기)"></button>
-        <button id="nextBtn" title="다음 쪽">›</button>
+        <button id="nextBtn" class="rail" title="다음 쪽" aria-label="다음 쪽">›</button>
       </span>
-      <span class="group">
-        <button id="zoomOut" title="축소">−</button>
+      <span class="group rail">
+        <button id="zoomOut" title="축소" aria-label="축소">−</button>
         <button id="zoomLabel" title="맞춤 크기로 돌아가기"></button>
-        <button id="zoomIn" title="확대">＋</button>
+        <button id="zoomIn" title="확대" aria-label="확대">＋</button>
       </span>
       <span class="group">
-        <button id="undoBtn" title="실행 취소">↶</button>
-        <button id="redoBtn" title="다시 실행">↷</button>
+        <button id="undoBtn" title="실행 취소" aria-label="실행 취소"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 4 9l5 5M4 9h10a5.5 5.5 0 0 1 0 11h-3"/></svg></button>
+        <button id="redoBtn" title="다시 실행" aria-label="다시 실행"><svg class="ico flip" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 4 9l5 5M4 9h10a5.5 5.5 0 0 1 0 11h-3"/></svg></button>
+      </span>
+      <span class="group" id="toolBtns">
+        <button data-tool="hand" title="이동"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 12.5V6a1.5 1.5 0 0 1 3 0v5M10 10V4.5a1.5 1.5 0 0 1 3 0V10m0-.5V5.5a1.5 1.5 0 0 1 3 0V11m0-1.5V8a1.5 1.5 0 0 1 3 0v6a7 7 0 0 1-7 7h-.5a6 6 0 0 1-5-2.7L4 14.6a1.5 1.5 0 0 1 2.3-1.9L7 13.5"/></svg><span class="name">이동</span></button>
+        <button data-tool="pen" title="펜: 글줄 맞춤이나 직선으로 그은 선의 끝을 누르면 끝 모양이 화살표 → : → 없음 순으로 바뀝니다"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1-4.5L16 4.5a2.1 2.1 0 0 1 3 3L8 18.5zM14 6.5l3 3"/></svg><span class="name">펜</span></button>
+        <button data-tool="hl" title="형광펜"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 14.5 15.5 6l3.5 3.5-8.5 8.5zM7 14.5 5 19h4.5l1-1M13 21h8"/></svg><span class="name">형광펜</span></button>
+        <button data-tool="eraser" title="지우개: 손글씨를 지웁니다(쪽 위의 글은 글 도구에서 글자를 모두 지우면 사라집니다)"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 20h11M5.4 14.6l8.2-8.2a2 2 0 0 1 2.8 0l3.2 3.2a2 2 0 0 1 0 2.8L12 20H9l-3.6-3.6a1.3 1.3 0 0 1 0-1.8zM10 10l6 6"/></svg><span class="name">지우개</span></button>
+        <button data-tool="text" title="글: 쪽을 눌러 글을 씁니다. 쓴 글은 누르면 고치고 끌면 옮깁니다. 글자를 모두 지우면 사라집니다"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7V4h14v3M12 4v16M8.5 20h7"/></svg><span class="name">글</span></button>
+        <button data-tool="memo" title="메모: 쪽을 눌러 메모장을 넣습니다"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 20H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v9zm0 0v-5a1 1 0 0 1 1-1h5M8 8.5h8M8 12h4"/></svg><span class="name">메모</span></button>
+        <button data-tool="num" title="번호: 쪽을 누르면 다음 번호(①②③…)를 글줄에 맞춰 찍습니다(글자 위를 누르면 글줄 위에, 아래를 누르면 밑줄 아래에, 낱말 앞에 맞춰). 시작 번호는 색 단추에서 고릅니다. 찍은 번호는 끌어서 옮기고 지우개로 지웁니다"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M10 9.5 12.5 7.5v9"/></svg><span class="name">번호</span></button>
+      </span>
+      <span class="group">
+        <button id="colorBtn" title="색·굵기" aria-haspopup="true" aria-label="색·굵기"><i class="dot"></i></button>
+        <button id="straightBtn" title="직선: 그은 선을 직선으로 만듭니다(수평·수직에 가까우면 반듯하게). 글줄 맞춤이 꺼져 있을 때 적용됩니다"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><circle cx="5.5" cy="18.5" r="2"/><circle cx="18.5" cy="5.5" r="2"/></svg><span class="name">직선</span></button>
+        <button id="snapBtn" title="글줄 맞춤: 펜은 글줄 밑에, 형광펜은 글줄 위에 자동으로 맞춥니다. 끄면 아무 데나 그릴 수 있습니다"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 15.5 12 4l5 11.5M8.8 11.5h6.4M4 20h16"/></svg><span class="name">글줄 맞춤</span></button>
       </span>
       <span class="group">
         <button id="tabSideBtn" class="tab" data-where="side" title="옆 인덱스: 이 쪽의 오른쪽 위에 표식을 답니다" aria-label="옆 인덱스"><i class="tabicon side"></i></button>
         <button id="tabTopBtn" class="tab" data-where="top" title="위 인덱스: 정말 중요한 쪽의 위쪽에 표식을 답니다" aria-label="위 인덱스"><i class="tabicon top"></i></button>
-        <button id="viewBtn" title="크기 맞춤·넘기는 방식·2쪽 보기·다크 모드">보기 ▾</button>
-      </span>
-      <button id="saveBtn" class="primary" title="필기를 포함해 PDF로 저장합니다. 이 앱에서 다시 열면 필기를 이어서 고칠 수 있습니다">PDF 저장</button>
-    </div>
-    <div class="bar tools">
-      <span class="group" id="toolBtns">
-        <button data-tool="hand">이동</button>
-        <button data-tool="pen" title="글줄 맞춤이나 직선으로 그은 선의 끝을 누르면 끝 모양이 화살표 → : → 없음 순으로 바뀝니다">펜</button>
-        <button data-tool="hl">형광펜</button>
-        <button data-tool="eraser" title="손글씨를 지웁니다(쪽 위의 글은 글 도구에서 글자를 모두 지우면 사라집니다)">지우개</button>
-        <button data-tool="text" title="쪽을 눌러 글을 씁니다. 쓴 글은 누르면 고치고 끌면 옮깁니다. 글자를 모두 지우면 사라집니다">글</button>
-        <button data-tool="memo" title="페이지를 눌러 메모장을 넣습니다">메모</button>
-      </span>
-      <span class="group" id="colorBox">
-        <button id="colorBtn" title="색" aria-haspopup="true"><i class="dot"></i></button>
-      </span>
-      <span class="group" id="sizeBox">
-        <button id="sizeDown" title="가늘게·작게" aria-label="굵기·크기 줄이기">−</button>
-        <span id="sizeLabel" aria-live="polite"></span>
-        <button id="sizeUp" title="굵게·크게" aria-label="굵기·크기 늘리기">＋</button>
-      </span>
-      <span class="group">
-        <button id="straightBtn" title="그은 선을 직선으로 만듭니다(수평·수직에 가까우면 반듯하게). 글줄 맞춤이 꺼져 있을 때 적용됩니다">직선</button>
-        <button id="snapBtn" title="펜은 글줄 밑에, 형광펜은 글줄 위에 자동으로 맞춥니다. 끄면 아무 데나 그릴 수 있습니다">글줄 맞춤</button>
+        <button id="viewBtn" aria-haspopup="menu" title="보기: 전체 화면·크기·넘기는 방식·2쪽 보기·다크 모드"><svg class="ico dots" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg><span class="name">보기</span></button>
+        <button id="saveBtn" class="primary" title="PDF 저장: 필기를 포함해 PDF로 저장합니다. 이 앱에서 다시 열면 필기를 이어서 고칠 수 있습니다"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 20h14"/></svg><span class="name">PDF 저장</span></button>
       </span>
     </div>
     </div>
@@ -124,6 +124,10 @@
           <button id="lostBtn" class="primary"></button>
           <button id="lostClose" aria-label="닫기" title="닫기">×</button>
         </div>
+        <div id="pickbar" role="toolbar" aria-label="고른 본문" hidden>
+          <button id="pickCopy">복사</button>
+          <button id="pickFind">찾기</button>
+        </div>
         <div id="pager" hidden>
           <button id="pagerBack" hidden></button>
           <div class="row">
@@ -139,12 +143,26 @@
     </div>
   </section>
 
-  <div id="palette" role="group" aria-label="색" hidden></div>
+  <div id="palette" role="group" aria-label="색·굵기" hidden>
+    <div class="swatches"></div>
+    <div id="numBox" role="group" aria-label="다음에 찍을 번호">
+      <span>다음 번호</span>
+      <div class="nums"></div>
+    </div>
+    <div id="sizeBox">
+      <span id="sizeName"></span>
+      <button id="sizeDown" title="가늘게·작게" aria-label="굵기·크기 줄이기">−</button>
+      <span id="sizeLabel" aria-live="polite"></span>
+      <button id="sizeUp" title="굵게·크게" aria-label="굵기·크기 늘리기">＋</button>
+    </div>
+  </div>
   <canvas id="loupe" hidden></canvas>
   <div id="toast" hidden></div>
+  <div id="say" class="sr" role="status"></div>
   <div id="update" role="status" hidden>
-    <span>새 버전이 있습니다.</span>
+    <span id="updateMsg">새 버전이 있습니다.</span>
     <button id="updateNow" class="primary">지금 바꾸기</button>
+    <button id="updateGet" hidden>받기만</button>
     <button id="updateLater">나중에</button>
   </div>
   <div id="saveFail" role="alert" hidden>
@@ -155,6 +173,6 @@
     <p id="awayMsg"></p>
     <div class="choices"><button id="awayBtn" class="primary"></button></div>
   </dialog>
-  <div id="busy" hidden><div><i class="spin"></i><span id="busyMsg"></span></div></div>
+  <div id="busy" hidden><div><i class="spin"></i><div class="busyBody"><span id="busyMsg"></span><div id="busyBar" hidden><div class="track" role="progressbar" aria-label="진행" aria-valuemin="0" aria-valuemax="100"><i></i></div><b></b></div></div></div></div>
 </body>
 </html>
