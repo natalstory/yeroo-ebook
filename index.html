@@ -11,8 +11,8 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" type="image/png" href="./icons/icon-192.png">
   <title>Yeroo eBook Viewer</title>
-  <script type="module" crossorigin src="./assets/index-B5ei3e7O.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-D3Bs6yv1.css">
+  <script type="module" crossorigin src="./assets/index-cLfZlpXx.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-BrVt15he.css">
 </head>
 <body>
   <noscript><p class="noscript">이 앱은 자바스크립트가 꺼져 있으면 열리지 않습니다. 브라우저 설정에서 자바스크립트를 켜 주세요.</p></noscript>
@@ -25,6 +25,7 @@
     <header>
       <h1>서재</h1>
       <div class="actions">
+        <button id="libViewBtn" title="목록으로 보기" aria-label="보기 방식 변경"></button>
         <button id="themeBtn" title="밝게/어둡게" aria-label="밝게/어둡게">◐</button>
         <button id="aboutBtn" title="앱 정보: 버전·저장 공간·공개 프로그램" aria-label="앱 정보">ⓘ</button>
         <button id="sampleBtn">샘플 문서</button>
@@ -48,7 +49,7 @@
       </span>
     </div>
     <div id="backup" hidden>
-      <span id="backupMsg"></span>
+      <span class="say"><span id="backupMsg"></span><small id="backupWhat"></small></span>
       <span class="choices">
         <button id="backupBtn" title="책 목록과 필기를 작은 파일 하나로 저장합니다. 책 파일(PDF·그림)은 담지 않습니다. 책을 필기와 함께 간직하려면 책마다 &quot;PDF 저장&quot;을 쓰세요">백업</button>
       </span>
@@ -145,9 +146,19 @@
 
   <div id="palette" role="group" aria-label="색·굵기" hidden>
     <div class="swatches"></div>
-    <div id="numBox" role="group" aria-label="다음에 찍을 번호">
-      <span>다음 번호</span>
-      <div class="nums"></div>
+    <div id="numBox" role="group" aria-label="번호 모양과 시작 번호">
+      <div class="num-row">
+        <span>모양</span>
+        <div class="num-styles">
+          <button data-style="plain" title="그냥 번호 (1, 2, 3…)">1</button>
+          <button data-style="paren" title="괄호 번호 (⑴, ⑵, ⑶…)">⑴</button>
+          <button data-style="circle" title="동그라미 번호 (①, ②, ③…)">①</button>
+        </div>
+      </div>
+      <div class="num-row">
+        <span>번호</span>
+        <div class="nums"></div>
+      </div>
     </div>
     <div id="sizeBox">
       <span id="sizeName"></span>
