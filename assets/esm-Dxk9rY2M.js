@@ -1,0 +1,2 @@
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./web-DqwMiUIE.js","./dist-CiOca_EQ.js"])))=>i.map(i=>d[i]);
+import{t as e}from"./index-DmAZlJbu.js";import{registerPlugin as t}from"./dist-CiOca_EQ.js";var n=t(`App`,{web:()=>e(()=>import(`./web-DqwMiUIE.js`).then(e=>new e.AppWeb),__vite__mapDeps([0,1]),import.meta.url)});export{n as App};
